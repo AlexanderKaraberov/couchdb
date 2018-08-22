@@ -607,6 +607,13 @@ validate_args(Args) ->
             mrverror(<<"`partition` parameter is not supported in this view.">>)
     end,
 
+    case {Style, Args#mrargs.include_docs} of
+        {normal, true} ->
+            mrverror(<<"`include_docs=true` is not supported in this view.">>);
+        {_, _} ->
+            ok
+    end,
+
     Args1 = case {Style, Partitioned, Partition} of
         {all_docs, true, undefined} ->
             Args;
